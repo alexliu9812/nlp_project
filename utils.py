@@ -15,31 +15,31 @@ from paddlenlp.datasets import MapDataset
 from paddlenlp.transformers import AutoModel, AutoTokenizer
 from paddlenlp.utils.log import logger
 
-params_path = "model/model_state.pdparams"
+# params_path = "model/model_state.pdparams"
 
-paddle.set_device("gpu")
-rank = paddle.distributed.get_rank()
-if paddle.distributed.get_world_size() > 1:
-    paddle.distributed.init_parallel_env()
-tokenizer = AutoTokenizer.from_pretrained("rocketqa-zh-base-query-encoder")
+# paddle.set_device("cpu")
+# rank = paddle.distributed.get_rank()
+# if paddle.distributed.get_world_size() > 1:
+#     paddle.distributed.init_parallel_env()
+# tokenizer = AutoTokenizer.from_pretrained("rocketqa-zh-base-query-encoder")
 
-pretrained_model = AutoModel.from_pretrained("rocketqa-zh-base-query-encoder")
+# pretrained_model = AutoModel.from_pretrained("rocketqa-zh-base-query-encoder")
 
-model = SimCSE(pretrained_model, output_emb_size=256)
-model = paddle.DataParallel(model)
+# model = SimCSE(pretrained_model, output_emb_size=256)
+# model = paddle.DataParallel(model)
 
-# Load pretrained semantic model
-if params_path and os.path.isfile(params_path):
-    state_dict = paddle.load(params_path)
-    model.set_dict(state_dict)
-    logger.info("Loaded parameters from %s" % params_path)
-else:
-    raise ValueError("Please set --params_path with correct pretrained model file")
+# # Load pretrained semantic model
+# if params_path and os.path.isfile(params_path):
+#     state_dict = paddle.load(params_path)
+#     model.set_dict(state_dict)
+#     logger.info("Loaded parameters from %s" % params_path)
+# else:
+#     raise ValueError("Please set --params_path with correct pretrained model file")
 
-inner_model = model._layers
+# inner_model = model._layers
 
-final_index = hnswlib.Index(space="ip", dim=256)
-final_index.load_index("model/my_index.bin")
+# final_index = hnswlib.Index(space="ip", dim=256)
+# final_index.load_index("model/my_index.bin")
 
 
 def get_sentence(sentence, inner_model, final_index, ques_dic, ans_dic):

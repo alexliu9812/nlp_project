@@ -22,7 +22,7 @@ from utils import get_sentence
 
 params_path = "model/model_state.pdparams"
 
-paddle.set_device("gpu")
+paddle.set_device("cpu")
 rank = paddle.distributed.get_rank()
 if paddle.distributed.get_world_size() > 1:
     paddle.distributed.init_parallel_env()
