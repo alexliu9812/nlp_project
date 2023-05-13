@@ -3,6 +3,7 @@ import streamlit as st
 import os
 import hnswlib
 import csv
+
 import paddle
 from training.ann_util import build_index
 from training.data import (
@@ -45,13 +46,7 @@ inner_model = model._layers
 final_index = hnswlib.Index(space="ip", dim=256)
 final_index.load_index("model/my_index.bin")
 
-
-
-
-# 打开csv文件
-import csv
 with open('data/qa_pair.csv', mode='r') as file:
-
     # 使用csv模块创建reader对象
     reader = csv.reader(file)
 
@@ -64,9 +59,7 @@ with open('data/qa_pair.csv', mode='r') as file:
         ans_dic[i] = row[1]
         ques_dic[i] = row[0]
         i += 1
-# print(my_dict)
 
 st.header("HR gie gie is **_really_ cool**.:sparkling_heart:")
 st.markdown("This text is :red[colored red], and this is **:blue[colored]** and bold.")
 st.markdown(":green[the color] is the :mortar_board: of hr giegie")
-

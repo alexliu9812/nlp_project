@@ -1,6 +1,5 @@
 import os
 import hnswlib
-from Introduction import ques_dic, ans_dic
 import paddle
 from training.ann_util import build_index
 from training.data import (
@@ -43,7 +42,7 @@ final_index = hnswlib.Index(space="ip", dim=256)
 final_index.load_index("model/my_index.bin")
 
 
-def get_sentence(sentence, inner_model, final_index):
+def get_sentence(sentence, inner_model, final_index, ques_dic, ans_dic):
     tokenizer = AutoTokenizer.from_pretrained("rocketqa-zh-base-query-encoder")
     encoded_inputs = tokenizer(text=[sentence], max_seq_len=128)
     input_ids = encoded_inputs["input_ids"]
@@ -60,7 +59,7 @@ def get_sentence(sentence, inner_model, final_index):
         # print(doc_idx)
         ans.append([ques_dic[doc_idx], ans_dic[doc_idx], 1.0 - cosine_sim])
     return ans
-
+# print(my_dict)
 
 # results = get_sentence_index("新加坡怎么找房子？", inner_model=inner_model, final_index=final_index)
 # print(results)
