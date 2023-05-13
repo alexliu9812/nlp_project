@@ -7,7 +7,7 @@ import pandas
 # data_frame = pd.read_csv('../data/qa_pair.csv')
 question = st.text_input("Enter some text 👇")
 if question:
-    ans = get_sentence(question)
+    ans = get_sentence(question, inner_model, final_index)
     # 将二维数组转换为DataFrame
     # st.checkbox("Use container width", value=False, key="use_container_width")
     df = pd.DataFrame(ans, columns=['Question in Database','Answer', 'possibility'])
