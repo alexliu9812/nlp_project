@@ -11,7 +11,7 @@ if question:
     # 将二维数组转换为DataFrame
     # st.checkbox("Use container width", value=False, key="use_container_width")
     df = pd.DataFrame(ans, columns=['Question in Database','Answer', 'possibility'])
-    st.dataframe(df, width=800)  # Same as st.write(df)
+    st.dataframe(df)  # Same as st.write(df)
 
 
 

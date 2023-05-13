@@ -53,7 +53,7 @@ def get_sentence(sentence, inner_model, final_index, ques_dic, ans_dic):
         input_ids=input_ids, token_type_ids=token_type_ids
     )
     # print('提取特征:{}'.format(cls_embedding))
-    recalled_idx, cosine_sims = final_index.knn_query(cls_embedding.numpy(), 10)
+    recalled_idx, cosine_sims = final_index.knn_query(cls_embedding.numpy(), 5)
     ans = []
     for doc_idx, cosine_sim in zip(recalled_idx[0], cosine_sims[0]):
         # print(doc_idx)

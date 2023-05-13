@@ -1,2 +1,4 @@
 model/*.bin
 model/*.pdparams
+*.vscode
+*.pyc

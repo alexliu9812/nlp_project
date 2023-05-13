@@ -46,7 +46,7 @@ inner_model = model._layers
 final_index = hnswlib.Index(space="ip", dim=256)
 final_index.load_index("model/my_index.bin")
 
-with open('data/qa_pair.csv', mode='r') as file:
+with open("data/qa_pair.csv", mode="r", encoding="utf-8") as file:
     # 使用csv模块创建reader对象
     reader = csv.reader(file)
 
