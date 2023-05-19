@@ -3,6 +3,11 @@ import streamlit as st
 import os
 import hnswlib
 import csv
+import random
+import numpy as np
+
+np.random.seed(42)
+random.seed(42)
 
 import paddle
 from training.ann_util import build_index

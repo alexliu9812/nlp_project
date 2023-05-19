@@ -1,2 +1,2 @@
 # to run this file use 
-## streamlit run Introduction.py
+## streamlit run SGenius.py
