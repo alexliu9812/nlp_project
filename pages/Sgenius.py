@@ -14,7 +14,8 @@ if selected_language == "English":
 
     # 设置按钮的宽度与页面一样
     button_width = col1.width
-    ans = get_sentence(question, inner_model, final_index, ques_dic, ans_dic)
+    print(question)
+    ans = get_sentence(question, tokenizer, inner_model, final_index, ques_dic, ans_dic)
     # 在每个列中创建一个按钮
     with col1:
         button1 = st.button("Select the most probable answer")
@@ -51,7 +52,8 @@ elif selected_language == "简体中文":
 
     # 设置按钮的宽度与页面一样
     button_width = col1.width
-    ans = get_sentence(question, inner_model, final_index, ques_dic, ans_dic)
+    print(question)
+    ans = get_sentence(question, tokenizer, inner_model, final_index, ques_dic, ans_dic)
     # 在每个列中创建一个按钮
     with col1:
         button1 = st.button("选取最可能的答案")

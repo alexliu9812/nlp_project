@@ -22,7 +22,7 @@ from utils import get_sentence
 
 params_path = "model/model_state.pdparams"
 
-paddle.set_device("cpu")
+paddle.set_device("gpu")
 rank = paddle.distributed.get_rank()
 if paddle.distributed.get_world_size() > 1:
     paddle.distributed.init_parallel_env()
@@ -46,13 +46,17 @@ inner_model = model._layers
 final_index = hnswlib.Index(space="ip", dim=256)
 final_index.load_index("model/my_index.bin")
 
+tokenizer = AutoTokenizer.from_pretrained("rocketqa-zh-base-query-encoder")
+
+ans_dic = {}
+ques_dic = {}
 with open("data/qa_pair.csv", mode="r", encoding="utf-8") as file:
     # 使用csv模块创建reader对象
     reader = csv.reader(file)
 
     # 创建一个空字典
-    ans_dic = {}
-    ques_dic = {}
+    # ans_dic = {}
+    # ques_dic = {}
     i = 0
     # 遍历每一行，将第一列作为key，第二列作为value添加到字典中
     for row in reader:
