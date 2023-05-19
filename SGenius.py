@@ -31,12 +31,17 @@ paddle.set_device("gpu")
 rank = paddle.distributed.get_rank()
 if paddle.distributed.get_world_size() > 1:
     paddle.distributed.init_parallel_env()
-tokenizer = AutoTokenizer.from_pretrained("rocketqa-zh-base-query-encoder")
+@st.cache
+def load_auto():
 
-pretrained_model = AutoModel.from_pretrained("rocketqa-zh-base-query-encoder")
+    tokenizer = AutoTokenizer.from_pretrained("rocketqa-zh-base-query-encoder")
 
-model = SimCSE(pretrained_model, output_emb_size=256)
-model = paddle.DataParallel(model)
+    pretrained_model = AutoModel.from_pretrained("rocketqa-zh-base-query-encoder")
+    model = SimCSE(pretrained_model, output_emb_size=256)
+    model = paddle.DataParallel(model)
+    return tokenizer, pretrained_model, model
+
+tokenizer, pretrained_model, model = load_auto()
 
 # Load pretrained semantic model
 if params_path and os.path.isfile(params_path):
@@ -47,12 +52,14 @@ else:
     raise ValueError("Please set --params_path with correct pretrained model file")
 
 inner_model = model._layers
+@st.cache
+def load_cache():
+    final_index = hnswlib.Index(space="ip", dim=256)
+    final_index.load_index("model/my_index.bin")
 
-final_index = hnswlib.Index(space="ip", dim=256)
-final_index.load_index("model/my_index.bin")
-
-tokenizer = AutoTokenizer.from_pretrained("rocketqa-zh-base-query-encoder")
-
+    tokenizer = AutoTokenizer.from_pretrained("rocketqa-zh-base-query-encoder")
+    return tokenizer, final_index
+tokenizer, final_index = load_cache()
 ans_dic = {}
 ques_dic = {}
 with open("data/qa_pair.csv", mode="r", encoding="utf-8") as file:
