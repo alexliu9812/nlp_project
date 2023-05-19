@@ -1,7 +1,9 @@
 import streamlit as st
 import pandas as pd
-from Introduction import *
-
+from Introduction import tokenizer, inner_model, final_index, ques_dic, ans_dic
+st.set_page_config(
+    page_title="SGenius Chatbot",
+)
 selected_language = st.sidebar.selectbox("Select a language", ["English", "简体中文"])
 
 # 根据用户选择的语言显示相应的消息
