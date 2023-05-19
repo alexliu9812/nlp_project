@@ -1,4 +1,7 @@
 import streamlit as st
+st.set_page_config(
+    page_title="SGenius Chatbot",
+)
 
 import os
 import hnswlib
@@ -31,7 +34,7 @@ paddle.set_device("gpu")
 rank = paddle.distributed.get_rank()
 if paddle.distributed.get_world_size() > 1:
     paddle.distributed.init_parallel_env()
-@st.cache
+@st.cache_resource
 def load_auto():
 
     tokenizer = AutoTokenizer.from_pretrained("rocketqa-zh-base-query-encoder")
@@ -52,7 +55,7 @@ else:
     raise ValueError("Please set --params_path with correct pretrained model file")
 
 inner_model = model._layers
-@st.cache
+@st.cache_resource
 def load_cache():
     final_index = hnswlib.Index(space="ip", dim=256)
     final_index.load_index("model/my_index.bin")
@@ -76,9 +79,6 @@ with open("data/qa_pair.csv", mode="r", encoding="utf-8") as file:
         ques_dic[i] = row[0]
         i += 1
 
-st.set_page_config(
-    page_title="SGenius Chatbot",
-)
 selected_language = st.sidebar.selectbox("Select a language", ["English", "简体中文"])
 a = st.sidebar.button('Introduction')
 if a:
