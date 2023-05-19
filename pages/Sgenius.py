@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 from Introduction import tokenizer, inner_model, final_index, ques_dic, ans_dic
+from utils import get_sentence
+
 st.set_page_config(
     page_title="SGenius Chatbot",
 )
