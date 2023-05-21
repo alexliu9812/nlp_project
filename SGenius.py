@@ -1,6 +1,6 @@
 import streamlit as st
 st.set_page_config(
-    page_title="SGenius Chatbot",
+    page_title="Singapore Explorer",
 )
 
 import os
